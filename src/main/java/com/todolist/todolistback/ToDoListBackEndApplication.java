@@ -11,5 +11,4 @@ public class ToDoListBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ToDoListBackEndApplication.class, args);
 	}
-
 }
