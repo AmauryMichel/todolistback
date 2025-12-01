@@ -71,6 +71,7 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- Jakarta -->
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
@@ -80,6 +81,12 @@
 			<artifactId>jakarta.persistence-api</artifactId>
 		</dependency>
 
+		<!-- Security -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
