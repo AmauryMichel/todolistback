@@ -13,9 +13,11 @@ public class SecurityConfig {
  
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable);
+        http.csrf(AbstractHttpConfigurer::disable)
+            .cors(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Allow all requests without authentication
+                .requestMatchers("/auth/register", "/auth/login").permitAll()
+                .anyRequest().authenticated()
             );
         return http.build();
     }
