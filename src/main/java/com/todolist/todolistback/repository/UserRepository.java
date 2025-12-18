@@ -1,6 +1,9 @@
-package com.todolist.todolistback.user;
+package com.todolist.todolistback.repository;
 
 import org.springframework.stereotype.Repository;
+
+import com.todolist.todolistback.entity.User;
+
 import org.springframework.data.repository.CrudRepository;
 
 @Repository

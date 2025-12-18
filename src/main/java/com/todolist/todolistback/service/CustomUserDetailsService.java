@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.todolist.todolistback.user.User;
-import com.todolist.todolistback.user.UserRepository;
+import com.todolist.todolistback.entity.User;
+import com.todolist.todolistback.repository.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{

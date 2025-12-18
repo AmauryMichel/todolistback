@@ -1,4 +1,4 @@
-package com.todolist.todolistback.user;
+package com.todolist.todolistback.entity;
 
 import jakarta.persistence.*;
 
