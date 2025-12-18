@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todolist.todolistback.entity.User;
+import com.todolist.todolistback.repository.UserRepository;
 import com.todolist.todolistback.security.JwtUtil;
-import com.todolist.todolistback.user.User;
-import com.todolist.todolistback.user.UserRepository;
 
 @RestController
 @RequestMapping("/auth")
@@ -60,7 +60,7 @@ public class AuthentificationController {
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(jwtUtils.generateToken(user.getUsername()));
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating account");
         }
