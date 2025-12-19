@@ -1,5 +1,7 @@
 package com.todolist.todolistback.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -8,8 +10,20 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @OneToMany(mappedBy = "creator")
+    private List<Project> createdProjects;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_projects", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projects;
+    
     @Column(unique=true)
     private String username;
+    
     private String password;
 
     @SuppressWarnings("unused")
