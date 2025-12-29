@@ -3,7 +3,11 @@ package com.todolist.todolistback.entity;
 import java.util.List;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Project {
     @Id
@@ -24,22 +28,6 @@ public class Project {
 
     public Project(User creator, String projectName) {
         this.creator = creator;
-        this.projectName = projectName;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
 }
