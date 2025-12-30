@@ -20,7 +20,17 @@ public class Note {
     @JoinColumn(name = "notegroup_id")
     private NoteGroup group;
 
-    private int orderNumber;
+    private int noteOrderNumber;
     private String name;
-    private Boolean completed;
+    private Boolean completed = false;
+
+    @SuppressWarnings("unused")
+    public Note() {}
+
+    public Note(User author, NoteGroup group, int noteOrderNumber, String name) {
+        this.author = author;
+        this.group = group;
+        this.noteOrderNumber = noteOrderNumber;
+        this.name = name;
+    }    
 }

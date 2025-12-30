@@ -15,7 +15,7 @@ public class Project {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToMany(mappedBy = "projects")
@@ -25,6 +25,9 @@ public class Project {
     private List<NoteGroup> noteGroups;
     
     private String projectName;
+
+    @SuppressWarnings("unused")
+    private Project() {}
 
     public Project(User creator, String projectName) {
         this.creator = creator;
