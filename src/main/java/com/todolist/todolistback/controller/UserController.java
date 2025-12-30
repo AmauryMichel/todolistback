@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.todolist.todolistback.entity.Project;
 import com.todolist.todolistback.entity.User;
 import com.todolist.todolistback.repository.UserRepository;
 
@@ -20,5 +21,11 @@ public class UserController {
     @GetMapping
     public List<User> getUsers() {
         return (List<User>) userRepository.findAll();
+    }
+
+    @GetMapping("/{id}/projects")
+    public List<Project> getUserProjects(@PathVariable long id) {
+        User user = userRepository.findById(id);
+        return user.getProjects();
     }
 }

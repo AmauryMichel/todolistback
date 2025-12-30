@@ -2,6 +2,8 @@ package com.todolist.todolistback.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,9 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonIncludeProperties(value = {"id"})
     @OneToMany(mappedBy = "creator")
     private List<Project> createdProjects;
 
+    @JsonIncludeProperties(value = {"id"})
     @ManyToMany
     @JoinTable(
         name = "user_projects", 
