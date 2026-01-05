@@ -1,0 +1,39 @@
+package com.todolist.todolistback.controller;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.todolist.todolistback.repository.NoteGroupRepository;
+import com.todolist.todolistback.repository.NoteRepository;
+import com.todolist.todolistback.entity.Note;
+
+@RestController
+@RequestMapping("/note")
+public class NoteController {
+    private final NoteRepository noteRepository;
+    private final NoteGroupRepository noteGroupRepository;
+
+    public NoteController(NoteRepository noteRepository, NoteGroupRepository noteGroupRepository) {
+        this.noteRepository = noteRepository;
+        this.noteGroupRepository = noteGroupRepository;
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createNoteGroup(@RequestBody Note note) {
+        if (!noteGroupRepository.existsById(note.getGroup().getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note group not valid");
+        }
+
+        try {
+            noteRepository.save(note);
+            return ResponseEntity.status(HttpStatus.CREATED).body(null);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating note");
+        }
+    }
+}
