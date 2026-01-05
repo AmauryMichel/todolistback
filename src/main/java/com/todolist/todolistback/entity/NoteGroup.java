@@ -1,6 +1,9 @@
 package com.todolist.todolistback.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,6 +17,7 @@ public class NoteGroup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
@@ -21,16 +25,17 @@ public class NoteGroup {
     @OneToMany(mappedBy = "group")
     private List<Note> notes;
 
-    private int groupOrderNumber;
     private String name;
+
+    private Integer groupOrderNumber = 0;
     private Boolean completed = false;
 
-    @SuppressWarnings("unused")
     public NoteGroup() {}
 
-    public NoteGroup(Project project, int groupOrderNumber, String name) {
+    public NoteGroup(Project project, Integer groupOrderNumber, String name) {
         this.project = project;
         this.groupOrderNumber = groupOrderNumber;
         this.name = name;
+        this.notes = new ArrayList<Note>();
     }
 }
