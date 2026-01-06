@@ -43,9 +43,10 @@ public class AuthentificationController {
                     user.getPassword()
                 )
             );
-            
+
+            long userId = userRepository.findByUsername(user.getUsername()).getId();
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(jwtUtils.generateToken(userDetails.getUsername()));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(userId + "!" + jwtUtils.generateToken(userDetails.getUsername()));
         } catch (BadCredentialsException badCredentialsException) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Incorrect credentials");
         }
@@ -60,7 +61,9 @@ public class AuthentificationController {
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(jwtUtils.generateToken(user.getUsername()));
+
+            long userId = userRepository.findByUsername(user.getUsername()).getId();
+            return ResponseEntity.status(HttpStatus.CREATED).body(userId + "!" + jwtUtils.generateToken(user.getUsername()));
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating account");
         }
