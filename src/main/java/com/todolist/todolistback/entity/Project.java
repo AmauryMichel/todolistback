@@ -31,6 +31,7 @@ public class Project {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> projectMembers;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "project")
     private List<NoteGroup> noteGroups;
     
