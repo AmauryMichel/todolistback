@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.todolist.todolistback.repository.ProjectRepository;
 import com.todolist.todolistback.repository.UserRepository;
+
 import com.todolist.todolistback.entity.NoteGroup;
 import com.todolist.todolistback.entity.Project;
 
@@ -35,6 +36,12 @@ public class ProjectController {
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating project");
         }
+    }
+
+    @GetMapping("/{id}")
+    public Project getProject(@PathVariable long id) {
+        Project project = projectRepository.findById(id);
+        return project;
     }
 
     @GetMapping("/{id}/notegroups")

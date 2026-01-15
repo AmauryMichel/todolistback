@@ -3,7 +3,6 @@ package com.todolist.todolistback.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import jakarta.persistence.*;
@@ -18,20 +17,19 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @JsonIncludeProperties(value = {"id", "username"})
     @ManyToOne
+    @JsonIncludeProperties(value = {"id", "username"})
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @JsonIgnore
     @ManyToMany
+    @JsonIncludeProperties(value = {"id", "username"})
     @JoinTable(
         name = "user_projects", 
         joinColumns = @JoinColumn(name = "project_id"), 
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> projectMembers;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "project")
     private List<NoteGroup> noteGroups;
     
