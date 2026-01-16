@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,16 +14,19 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Project {
+    @JsonView(Views.Simplified.class)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
+    @JsonView(Views.Simplified.class)
     @JsonIncludeProperties(value = {"id", "username"})
     @JoinColumn(name = "creator_id")
     private User creator;
 
     @ManyToMany
+    @JsonView(Views.Detailed.class)
     @JsonIncludeProperties(value = {"id", "username"})
     @JoinTable(
         name = "user_projects", 
@@ -30,9 +34,11 @@ public class Project {
         inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> projectMembers;
 
+    @JsonView(Views.Detailed.class)
     @OneToMany(mappedBy = "project")
     private List<NoteGroup> noteGroups;
     
+    @JsonView(Views.Simplified.class)
     private String projectName;
 
     @SuppressWarnings("unused")
