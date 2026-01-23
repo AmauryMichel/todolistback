@@ -41,13 +41,17 @@ public class Project {
     @JsonView(Views.Simplified.class)
     private String projectName;
 
+    @JsonView(Views.Simplified.class)
+    private String description;
+
     @SuppressWarnings("unused")
     private Project() {}
 
-    public Project(User creator, String projectName) {
+    public Project(User creator, String projectName, String description) {
         this.creator = creator;
         this.projectName = projectName;
         this.projectMembers = new ArrayList<User>();
+        this.description = description;
         addMember(creator);
     }
 
