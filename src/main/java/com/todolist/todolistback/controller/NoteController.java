@@ -3,6 +3,8 @@ package com.todolist.todolistback.controller;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,21 @@ public class NoteController {
             return ResponseEntity.status(HttpStatus.CREATED).body(null);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating note");
+        }
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<?> delete(@PathVariable long id) {
+        Note note = noteRepository.findById(id);
+        if (note == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
+        }
+
+        try {
+            noteRepository.delete(note);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error deleting note");
         }
     }
 }

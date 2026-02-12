@@ -7,5 +7,5 @@ import com.todolist.todolistback.entity.Note;
 
 @Repository
 public interface NoteRepository extends CrudRepository<Note, Long>{
-
+    Note findById(long id);
 }
