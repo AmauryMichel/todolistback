@@ -39,6 +39,22 @@ public class NoteController {
         }
     }
 
+    @PutMapping("/{id}/edit-text")
+    public ResponseEntity<?> editText(@PathVariable long id, @RequestBody String text) {
+        Note note = noteRepository.findById(id);
+        if (note == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
+        }
+
+        try {
+            note.setText(text);
+            noteRepository.save(note);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error updating note");
+        }
+    }
+
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable long id) {
         Note note = noteRepository.findById(id);
