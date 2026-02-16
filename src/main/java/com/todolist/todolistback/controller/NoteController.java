@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +37,22 @@ public class NoteController {
             return ResponseEntity.status(HttpStatus.CREATED).body(null);
         } catch (DataAccessException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating note");
+        }
+    }
+
+    @PutMapping("/{id}/set-completed")
+    public ResponseEntity<?> setCompleted(@PathVariable long id, @RequestBody boolean completed) {
+        Note note = noteRepository.findById(id);
+        if (note == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
+        }
+
+        try {
+            note.setCompleted(completed);
+            noteRepository.save(note);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (DataAccessException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error updating note");
         }
     }
 
