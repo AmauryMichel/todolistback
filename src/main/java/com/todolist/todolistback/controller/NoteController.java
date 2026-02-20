@@ -27,7 +27,7 @@ public class NoteController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createNoteGroup(@RequestBody Note note) {
+    public ResponseEntity<?> createNote(@RequestBody Note note) {
         if (!noteGroupRepository.existsById(note.getGroup().getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note group not valid");
         }
@@ -41,7 +41,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}/set-completed")
-    public ResponseEntity<?> setCompleted(@PathVariable long id, @RequestBody boolean completed) {
+    public ResponseEntity<?> setNoteCompleted(@PathVariable long id, @RequestBody boolean completed) {
         Note note = noteRepository.findById(id);
         if (note == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
@@ -57,7 +57,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}/edit-text")
-    public ResponseEntity<?> editText(@PathVariable long id, @RequestBody String text) {
+    public ResponseEntity<?> editNoteText(@PathVariable long id, @RequestBody String text) {
         Note note = noteRepository.findById(id);
         if (note == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
@@ -73,7 +73,7 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}/delete")
-    public ResponseEntity<?> delete(@PathVariable long id) {
+    public ResponseEntity<?> deleteNote(@PathVariable long id) {
         Note note = noteRepository.findById(id);
         if (note == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note does not exist");
