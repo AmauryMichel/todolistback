@@ -11,23 +11,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todolist.todolistback.entity.Note;
 import com.todolist.todolistback.repository.NoteGroupRepository;
 import com.todolist.todolistback.repository.NoteRepository;
-import com.todolist.todolistback.entity.Note;
+import com.todolist.todolistback.repository.UserRepository;
 
 @RestController
 @RequestMapping("/note")
 public class NoteController {
+    
     private final NoteRepository noteRepository;
     private final NoteGroupRepository noteGroupRepository;
+    private final UserRepository userRepository;
 
-    public NoteController(NoteRepository noteRepository, NoteGroupRepository noteGroupRepository) {
+    public NoteController(NoteRepository noteRepository, NoteGroupRepository noteGroupRepository, UserRepository userRepository) {
         this.noteRepository = noteRepository;
         this.noteGroupRepository = noteGroupRepository;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/create")
     public ResponseEntity<?> createNote(@RequestBody Note note) {
+        if (!userRepository.existsById(note.getAuthor().getId())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Author not valid");
+        }
         if (!noteGroupRepository.existsById(note.getGroup().getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Note group not valid");
         }
