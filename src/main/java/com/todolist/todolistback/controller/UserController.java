@@ -31,4 +31,16 @@ public class UserController {
         User user = userRepository.findById(id);
         return user.getProjects();
     }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable long id) {
+        User user = userRepository.findById(id);
+        return user;
+    }
+
+    @GetMapping("/")
+    public User getUserByName(@RequestParam String username) {
+        User user = userRepository.findByUsername(username);
+        return user;
+    }    
 }
