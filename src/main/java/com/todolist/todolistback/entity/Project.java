@@ -55,16 +55,28 @@ public class Project {
         addMember(creator);
     }
 
-    public void addMember(User user) {
-        if (this.projectMembers.contains(user)) return;
+    public int addMember(User user) {
+        int index = this.containsUser(user.getId());
+        if (index != -1) return -1;
         
         this.projectMembers.add(user);
+        return 0;
     }
 
-    public void removeMember(User user) {
-        int index = this.projectMembers.indexOf(user);
-        if (index == -1) return;
+    public int removeMember(User user) {
+        int index = this.containsUser(user.getId());
+        if (index == -1) return -1;
 
         this.projectMembers.remove(index);
+        return 0;
+    }
+
+    private int containsUser(long userId) {
+        for(int i = 0; i < this.projectMembers.size(); i++) {
+            if (this.projectMembers.get(i).getId() == userId) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
