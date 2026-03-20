@@ -56,7 +56,7 @@ public class ProjectController {
         return project.getNoteGroups();
     }
 
-    @PutMapping("/{id}/addMember")
+    @PutMapping("/{id}/add-member")
     public ResponseEntity<?> addMember(@PathVariable long id, @RequestBody User newUser) {
         Project project = projectRepository.findById(id);
         if (project == null) {
@@ -79,7 +79,7 @@ public class ProjectController {
         }
     }
 
-    @PutMapping("/{id}/removeMember")
+    @PutMapping("/{id}/remove-member")
     public ResponseEntity<?> removeMember(@PathVariable long id, @RequestBody User newUser) {
         Project project = projectRepository.findById(id);
         if (project == null) {
